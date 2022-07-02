@@ -1,0 +1,23 @@
+{
+  "$schema": "..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "libs/server/controllers/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/server/controllers/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/controllers"],
+      "options": {
+        "jestConfig": "libs/server/controllers/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

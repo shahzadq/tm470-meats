@@ -14,7 +14,13 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@tm470-meats/server/controllers": [
+        "libs/server/controllers/src/index.ts"
+      ],
+      "@tm470-meats/server/middleware": ["libs/server/middleware/src/index.ts"],
+      "@tm470-meats/server/utils": ["libs/server/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

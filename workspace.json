@@ -1,5 +1,11 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "projects": {}
+  "projects": {
+    "account": "apps/account",
+    "account-e2e": "apps/account-e2e",
+    "server-controllers": "libs/server/controllers",
+    "server-middleware": "libs/server/middleware",
+    "server-utils": "libs/server/utils"
+  }
 }
