@@ -1,1 +1,5 @@
-export * from './lib/server-middleware';
+import { auth } from './lib/auth';
+
+const middleware = { auth };
+
+export default middleware;
