@@ -23,7 +23,7 @@ export async function post(req: NextApiRequest, res: NextApiResponse) {
 
       if (security.verified) {
         // the account is verified
-        return res.status(200).json({ _id: security._id, authenticated: true });
+        return res.status(200).json({ _id: security._id });
       } else {
         return controllers.errors.construct(res, {
           message: 'Account not verified.',
