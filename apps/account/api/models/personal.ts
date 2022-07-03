@@ -20,6 +20,28 @@ const schema: Schema = new Schema(
       required: true,
       unqiue: true,
     },
+    address: {
+      number: {
+        type: Number,
+        required: true,
+      },
+      street: {
+        type: String,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      postcode: {
+        type: String,
+        required: true,
+      },
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
   },
   {
     collection: 'Personal',

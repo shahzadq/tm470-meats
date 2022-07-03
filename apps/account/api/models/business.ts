@@ -14,6 +14,36 @@ const schema: Schema = new Schema(
       ref: 'Security',
       required: true,
     },
+    address: {
+      number: {
+        type: Number,
+        required: true,
+      },
+      street: {
+        type: String,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      postcode: {
+        type: String,
+        required: true,
+      },
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    hours: {
+      open: {
+        type: String,
+      },
+      close: {
+        type: String,
+      },
+    },
   },
   {
     collection: 'Business',

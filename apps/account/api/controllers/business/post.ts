@@ -13,6 +13,13 @@ async function create(
   const business: IApiModelBusiness = await database.business.create({
     name: req.body.name.toLowerCase(),
     securityId: security._id,
+    address: {
+      number: req.body.address.number,
+      street: req.body.address.street,
+      city: req.body.address.city,
+      postcode: req.body.address.postcode,
+    },
+    phone: req.body.phone,
   });
   return res.status(200).json(business);
 }
