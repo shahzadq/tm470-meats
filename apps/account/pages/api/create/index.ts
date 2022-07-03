@@ -5,6 +5,8 @@ import { security } from '../../../api/controllers/security';
 import { business } from '../../../api/controllers/business';
 import { personal } from '../../../api/controllers/personal';
 import { code } from '../../../api/controllers/code';
+import { IApiModelSecurity } from '../../../api/models/security.interfaces';
+import database from '../../../api/models';
 
 const accountTypes = { business, personal };
 
@@ -16,14 +18,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (method) {
     case 'POST':
       return await security.POST(req, res, async () => {
-        return await accountTypes[req.body.type].POST(req, res, async () => {
-          return await code.POST(req, res, async () => {
-            return res.status(200).json({
-              message:
-                'Account created successfully. Check email for code to verify account.',
+        return await accountTypes[(req.body.type as string).toLowerCase()].POST(
+          req,
+          res,
+          async () => {
+            return await code.POST(req, res, async () => {
+              const security: IApiModelSecurity =
+                await database.security.findOne({ email: req.body.email });
+                
+              return res.status(200).json({
+                message:
+                  'Account created successfully. Check email for code to verify account.',
+                _id: security._id,
+              });
             });
-          });
-        });
+          }
+        );
       });
 
     default:

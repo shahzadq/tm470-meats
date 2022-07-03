@@ -20,16 +20,17 @@ export async function post(req: NextApiRequest, res: NextApiResponse) {
 
     if (match) {
       // the passwords match
+      req.session.user = {
+        _id: security._id,
+        email: security.email,
+      };
+      req.session.verified = security.verified;
 
-      if (security.verified) {
-        // the account is verified
-        return res.status(200).json({ _id: security._id });
-      } else {
-        return controllers.errors.construct(res, {
-          message: 'Account not verified.',
-          status: 401,
-        });
-      }
+      await req.session.save();
+
+      return res
+        .status(200)
+        .json({ _id: security._id, verified: security.verified });
     } else {
       return error(res);
     }

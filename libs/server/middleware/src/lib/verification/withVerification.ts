@@ -4,25 +4,20 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 
 const error: interfaces.errors.IServerResponseError = {
   message: 'Unauthorised.',
-  description: 'Not signed in.',
+  description: 'Not verified.',
   status: 401,
 };
 
-async function withAuth(
+async function withVerification(
   req: NextApiRequest,
   res: NextApiResponse,
   next: NextApiHandler
 ) {
   try {
-    const { user } = req.session as any;
-    const { id } = req.query;
+    const { verified } = req.session as any;
 
-    if (user) {
-      if (id === user._id) {
-        return next(req, res);
-      } else {
-        return controllers.errors.construct(res, error);
-      }
+    if (verified) {
+      return next(req, res);
     } else {
       return controllers.errors.construct(res, error);
     }
@@ -31,16 +26,16 @@ async function withAuth(
   }
 }
 
-export function internalWithAuth(
+export function internalWithVerification(
   req: NextApiRequest,
   res: NextApiResponse,
   next: () => Promise<void>
 ) {
-  return withAuth(req, res, next);
+  return withVerification(req, res, next);
 }
 
-export function handlerWithAuth(handler: NextApiHandler) {
+export function handlerWithVerification(handler: NextApiHandler) {
   return async (req: NextApiRequest, res: NextApiResponse) => {
-    return withAuth(req, res, handler);
+    return withVerification(req, res, handler);
   };
 }

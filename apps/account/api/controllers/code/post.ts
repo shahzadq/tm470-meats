@@ -3,6 +3,7 @@ import utils from '@tm470-meats/server/utils';
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import database from '../../models';
 import { IApiModelSecurity } from '../../models/security.interfaces';
+import * as randomstring from 'randomstring';
 
 export async function post(
   req: NextApiRequest,
@@ -16,21 +17,18 @@ export async function post(
       $or: [{ _id: id }, { email: req.body.email }],
     });
 
-    let code = '';
-    const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    for (let i = 0; i < (length || 4); i++) {
-      code += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
+    const code = randomstring.generate({ length: 4, readable: true });
 
     await utils.email.send(
       'accounts',
       security.email,
       'A code was requested.',
       await utils.email.compile(
-        `<html><body>Your code is: {{code}}</body></html>`,
-        { code: code }
+        `<html><body>Welcome to Meats, {{name}}!.<br /> Your code is: {{code}}</body></html>`,
+        {
+          code: code,
+          name: req.body.firstName ? req.body.firstName : req.body.name,
+        }
       )
     );
 

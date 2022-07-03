@@ -15,6 +15,7 @@ declare module 'iron-session' {
     user: {
       _id: string;
       email: string;
-    };
+    },
+    verified: boolean
   }
 }

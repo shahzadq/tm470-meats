@@ -14,6 +14,9 @@ export async function put(req: NextApiRequest, res: NextApiResponse) {
         { new: true }
       );
 
+    req.session.verified = security.verified;
+    await req.session.save();
+
     return res.status(200).json({ _id: security._id });
   } catch (err) {
     return controllers.errors.codes[500](req, res);

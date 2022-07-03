@@ -22,7 +22,7 @@ export async function post(
 
     if (!personal) {
       // the account doesnt already exist therefore create it
-      await database.personal.create({
+      const personal: IApiModelPersonal = await database.personal.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         securityId: security._id,
