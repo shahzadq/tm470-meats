@@ -8,7 +8,7 @@ export const businessNotFoundError = (res: NextApiResponse) => {
 
 export const businessNameTakenError = (res: NextApiResponse) => {
   controllers.errors.construct(res, {
-    message: 'That name is already registered on your account.',
+    message: 'That business name is already registered on your account.',
     status: 400,
   });
 };

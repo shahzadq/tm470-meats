@@ -10,29 +10,34 @@ export async function put(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { id, name } = req.query;
 
-    const nameMatch: boolean = (await database.business.findOne({
+    const business: IApiModelBusiness = await database.business.findOne({
       securityId: id,
-      name: req.body.name.toLowerCase(),
-    }))
-      ? true
-      : false;
+      name: name,
+    });
 
-    if (!nameMatch) {
-      // the name is available
-      const business: IApiModelBusiness =
-        await database.business.findOneAndUpdate(
-          { securityId: id, name: (name as string).toLowerCase() },
-          { name: req.body.name.toLowerCase() },
-          { new: true }
-        );
+    if (business) {
+      const nameMatch: boolean = (await database.business.findOne({
+        securityId: id,
+        name: req.body.name.toLowerCase(),
+      }))
+        ? true
+        : false;
 
-      if (business) {
+      if (!nameMatch) {
+        // the name is available
+        const business: IApiModelBusiness =
+          await database.business.findOneAndUpdate(
+            { securityId: id, name: name },
+            { name: req.body.name.toLowerCase() },
+            { new: true }
+          );
+
         return res.status(200).json(business);
       } else {
-        return businessNotFoundError(res);
+        return businessNameTakenError(res);
       }
     } else {
-      return businessNameTakenError(res);
+      return businessNotFoundError(res);
     }
   } catch (err) {
     return businessNotFoundError(res);
