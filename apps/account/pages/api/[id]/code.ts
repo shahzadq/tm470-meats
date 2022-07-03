@@ -23,6 +23,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default withIronSessionApiRoute(
-  middleware.auth.handler(handler),
+  middleware.auth.handler(middleware.verification.handler(handler)),
   utils.session.iron.config
 );
