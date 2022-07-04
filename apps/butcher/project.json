@@ -26,7 +26,8 @@
       "configurations": {
         "development": {
           "buildTarget": "butcher:build:development",
-          "dev": true
+          "dev": true,
+          "port": 4300
         },
         "production": {
           "buildTarget": "butcher:build:production",

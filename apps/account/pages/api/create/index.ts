@@ -7,6 +7,7 @@ import { personal } from '../../../api/controllers/personal';
 import { code } from '../../../api/controllers/code';
 import { IApiModelSecurity } from '../../../api/models/security.interfaces';
 import database from '../../../api/models';
+import axios from 'axios';
 
 const accountTypes = { business, personal };
 
@@ -25,7 +26,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             return await code.POST(req, res, async () => {
               const security: IApiModelSecurity =
                 await database.security.findOne({ email: req.body.email });
-                
+
+              await axios.post(`http://localhost:4300/api/${security._id}/sections`);
+
               return res.status(200).json({
                 message:
                   'Account created successfully. Check email for code to verify account.',

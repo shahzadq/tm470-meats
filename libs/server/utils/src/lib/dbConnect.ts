@@ -18,7 +18,7 @@ async function dbConnect() {
     keepAlive: true,
   };
 
-  const conn = mongoose
+  const conn = await mongoose
     .connect(MONGODB_URI as string, opts)
     .then((mongoose) => {
       return mongoose;
