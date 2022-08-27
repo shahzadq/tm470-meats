@@ -6,6 +6,8 @@
     "account-e2e": "apps/account-e2e",
     "butcher": "apps/butcher",
     "butcher-e2e": "apps/butcher-e2e",
+    "customer": "apps/customer",
+    "customer-e2e": "apps/customer-e2e",
     "server-controllers": "libs/server/controllers",
     "server-middleware": "libs/server/middleware",
     "server-utils": "libs/server/utils"
